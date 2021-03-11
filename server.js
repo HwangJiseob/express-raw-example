@@ -1,5 +1,6 @@
 const http = require('http')
 const express = require('express')
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const { Router, static } = express
 
@@ -9,6 +10,13 @@ const port = Number(process.env.PORT) || 3000
 app.set('views', __dirname + '/src/pages')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine());
+
+app.use(
+  createProxyMiddleware('/api', {
+      target: 'http://localhost:3000/public',
+      changeOrigin: true
+  })
+)
 
 
 app.get('/', (req, res) => {
