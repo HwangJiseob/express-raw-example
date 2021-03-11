@@ -74,3 +74,6 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+# unnecessary file to upload on github
+package-lock.json
