@@ -1,10 +1,24 @@
 const http = require('http')
-const app = require('express')()
+const express = require('express')
+
+const { Router, static } = express
+
+const app = express()
 const port = Number(process.env.PORT) || 3000
 
+app.set('views', __dirname + '/src/pages')
+app.set('view engine', 'jsx')
+app.engine('jsx', require('express-react-views').createEngine());
+
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  // console.log(req.headers)
+  res.render('index', {message: "Hello World!!", req: req, res: res})
 })
+
+app.use('/public', static(__dirname + '/public'))
+
+
 
 
 // express의 app.listen() 대신 http의 server.listen()을 쓰는 이유는
