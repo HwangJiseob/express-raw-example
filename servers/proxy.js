@@ -38,7 +38,6 @@ const front_proxy = createProxyMiddleware({
     res.end('Something went wrong. And we are reporting a custom error message.');
   },
   onProxyReq: (proxyReq, req, res) => {
-    console.log("cra", req.url)
   },
   onProxyRes: (proxyRes, req, res) => {
   }

@@ -1,11 +1,32 @@
 const http = require('http')
 const express = require('express')
+const mysql = require('mysql2')
 const { createProxyMiddleware } = require('http-proxy-middleware');
+require("dotenv").config()
 
 const { settings } = require('../../settings')
 const port = (()=>{ const { port } = settings.servers['api']; return Number(port)})()
 
 const { Router, static } = express
+
+// execution
+
+const dbconn = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : process.env.MYSQL_PW,
+  database : "world"  //test
+});
+dbconn.connect()
+
+dbconn.query('SELECT Name FROM world.city limit 10;', async (error, results, fields) => {
+  if(error){
+    throw error
+  } else {
+    console.log(results)
+  }
+});
+
 
 const app = express()
 
