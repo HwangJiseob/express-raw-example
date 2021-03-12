@@ -10,7 +10,7 @@ const { Router, static } = express
 
 const app = express()
 
-const auth_proxy = createProxyMiddleware({
+const api_proxy = createProxyMiddleware({
   target: `http://localhost:${api.port}/`,
   changeOrigin: true,
   pathRewrite: {'^/api' : ''},
@@ -18,10 +18,11 @@ const auth_proxy = createProxyMiddleware({
     res.writeHead(500, {
       'Content-Type': 'text/plain',
     });
+    console.log(err)
     res.end('Something went wrong. And we are reporting a custom error message.');
   },
   onProxyReq: (proxyReq, req, res) => {
-    console.log('auth')
+    console.log('api')
   },
   onProxyRes: (proxyRes, req, res) => {
   }
@@ -37,29 +38,29 @@ const front_proxy = createProxyMiddleware({
     res.end('Something went wrong. And we are reporting a custom error message.');
   },
   onProxyReq: (proxyReq, req, res) => {
+    console.log("cra", req.url)
   },
   onProxyRes: (proxyRes, req, res) => {
-    console.log("onProxyRes")
   }
 })
 
-app.use('/api', auth_proxy)
+app.use('/api', api_proxy)
 app.use('/', front_proxy)
 
 
-app.get('/', (req, res) => {
-  // console.log(req.headers)
-  res.render('index', {message: "Hello World!!", req: req, res: res})
-})
+// app.get('/', (req, res) => {
+//   // console.log(req.headers)
+//   res.render('index', {message: "Hello World!!", req: req, res: res})
+// })
 
-app.get('/login', (req,res) => {
-  res.render('login')
-})
+// app.get('/login', (req,res) => {
+//   res.render('login')
+// })
 
 app.use('/public', static(__dirname + '/public'))
 
 
 const server = http.createServer(app)
 server.listen(port, ()=>{
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Proxy server at http://localhost:${port}`)
 })

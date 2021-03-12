@@ -11,10 +11,11 @@ const app = express()
 
 app.get('/', (req, res) => {
   // console.log(req.headers)
-  res.send("호호")
+  console.log("api get method on")
+  res.send({"test": "test api result"})
 })
 
 const server = http.createServer(app)
 server.listen(port, ()=>{
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`API server listening at http://localhost:${port}`)
 })
