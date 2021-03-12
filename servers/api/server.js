@@ -3,7 +3,7 @@ const express = require('express')
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const { settings } = require('../../settings')
-const port = (()=>{ const { port } = settings.servers['business']; return Number(port)})()
+const port = (()=>{ const { port } = settings.servers['api']; return Number(port)})()
 
 const { Router, static } = express
 
@@ -11,7 +11,7 @@ const app = express()
 
 app.get('/', (req, res) => {
   // console.log(req.headers)
-  res.send("하하")
+  res.send("호호")
 })
 
 const server = http.createServer(app)

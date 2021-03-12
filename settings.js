@@ -3,10 +3,10 @@ const settings = {
     auth: {
       port: 9000
     },
-    business: {
+    api: {
       port: 8080
     },
-    page: {
+    front: {
       port: 5000
     },
     pay: {

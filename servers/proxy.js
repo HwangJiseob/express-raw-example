@@ -2,7 +2,7 @@ const http = require('http')
 const express = require('express')
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const { proxy, auth, page } = require('../settings').settings.servers
+const { proxy, auth, front, api } = require('../settings').settings.servers
 
 const port = (()=>{ const { port } = proxy; return Number(port)})()
 
@@ -10,12 +10,8 @@ const { Router, static } = express
 
 const app = express()
 
-app.set('views', __dirname + '/src/pages')
-app.set('view engine', 'jsx')
-app.engine('jsx', require('express-react-views').createEngine());
-
 const auth_proxy = createProxyMiddleware({
-  target: `http://localhost:${auth.port}/`,
+  target: `http://localhost:${api.port}/`,
   changeOrigin: true,
   pathRewrite: {'^/api' : ''},
   onError: (err, req, res) => {
@@ -32,7 +28,7 @@ const auth_proxy = createProxyMiddleware({
 })
 
 const front_proxy = createProxyMiddleware({
-  target: `http://localhost:${page.port}`,
+  target: `http://localhost:${front.port}`,
   changeOrigin: true,   // cors 이슈 방지
   onError: (err, req, res) => {
     res.writeHead(500, {
