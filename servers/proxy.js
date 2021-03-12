@@ -2,17 +2,20 @@ const http = require('http')
 const express = require('express')
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
+const { proxy, auth, page } = require('../settings').settings.servers
+
+const port = (()=>{ const { port } = proxy; return Number(port)})()
+
 const { Router, static } = express
 
 const app = express()
-const port = Number(process.env.PORT) || 5000
 
 app.set('views', __dirname + '/src/pages')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine());
 
 const auth_proxy = createProxyMiddleware({
-  target: 'http://localhost:9000/',
+  target: `http://localhost:${auth.port}/`,
   changeOrigin: true,
   pathRewrite: {'^/api' : ''},
   onError: (err, req, res) => {
@@ -22,14 +25,15 @@ const auth_proxy = createProxyMiddleware({
     res.end('Something went wrong. And we are reporting a custom error message.');
   },
   onProxyReq: (proxyReq, req, res) => {
+    console.log('auth')
   },
   onProxyRes: (proxyRes, req, res) => {
   }
 })
 
 const front_proxy = createProxyMiddleware({
-  target: 'http://localhost:3000/',
-  changeOrigin: true,
+  target: `http://localhost:${page.port}`,
+  changeOrigin: true,   // cors 이슈 방지
   onError: (err, req, res) => {
     res.writeHead(500, {
       'Content-Type': 'text/plain',
@@ -37,7 +41,6 @@ const front_proxy = createProxyMiddleware({
     res.end('Something went wrong. And we are reporting a custom error message.');
   },
   onProxyReq: (proxyReq, req, res) => {
-    console.log("onProxyReq")
   },
   onProxyRes: (proxyRes, req, res) => {
     console.log("onProxyRes")

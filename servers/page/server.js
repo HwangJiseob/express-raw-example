@@ -1,12 +1,20 @@
 const http = require('http')
 const express = require('express')
 
+const { settings } = require('../../settings')
+
+const port = (()=>{ const { port } = settings.servers['page']; return Number(port)})()
+
 const { Router, static } = express
 
 const app = express()
-const port = Number(process.env.PORT) || 3000
 
-app.set('views', __dirname + '/src/pages')
+// 나중에 fs 모듈을 사용한 방식으로 수정해야함.
+const dir = __dirname.split('\\')
+dir.pop()
+dir.pop()
+
+app.set('views', dir.join('\\') + '/src/pages')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine());
 
