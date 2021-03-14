@@ -10,22 +10,13 @@ const { Router, static } = express
 
 // execution
 
-const dbconn = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : process.env.MYSQL_PW,
-  database : "world"  //test
-});
-dbconn.connect()
-
-dbconn.query('SELECT Name FROM world.city limit 10;', async (error, results, fields) => {
-  if(error){
-    throw error
-  } else {
-    console.log(results)
-  }
-});
-
+// const dbconn = mysql.createConnection({
+//   host     : 'localhost',
+//   user     : 'root',
+//   password : process.env.MYSQL_PW,
+//   database : "world"  //test
+// });
+// dbconn.connect()
 
 const app = express()
 

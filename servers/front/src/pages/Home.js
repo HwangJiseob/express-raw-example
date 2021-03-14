@@ -7,9 +7,24 @@ const Home = () => {
       '/api',
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': "application/json"
         },
         method: 'GET',
+        // body: 'test body' // body data type must match "Content-Type" header
+      }
+    )
+    console.log(await res.json())
+  }
+  const get_auth = async () => {
+    const res = await fetch(
+      '/api/auth',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': "application/json"
+        },
+        method: 'POST',
         // body: 'test body' // body data type must match "Content-Type" header
       }
     )
@@ -23,6 +38,9 @@ const Home = () => {
       </Link>
       <button onClick={get_api}>
         api test
+      </button>
+      <button onClick={get_auth}>
+        auth test
       </button>
     </div>
   )

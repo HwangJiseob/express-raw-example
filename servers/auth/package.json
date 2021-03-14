@@ -8,5 +8,10 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "uid": "^2.0.0"
+  }
 }
