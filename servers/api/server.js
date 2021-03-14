@@ -1,7 +1,6 @@
 const http = require('http')
 const express = require('express')
 const mysql = require('mysql2')
-const { createProxyMiddleware } = require('http-proxy-middleware');
 require("dotenv").config()
 
 const { settings } = require('../../settings')

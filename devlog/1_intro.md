@@ -6,6 +6,7 @@ series: express로 백엔드 공부하기
 thumbnail: "..."
 description: express 시작
 ---
+express를 시작하기 전에 백엔드에 대한 간단한 지식부터 짚고 가려고 합니다.
 
 # Web Server와 Web Applicatoin Server
 인터넷에 이 둘의 차이점을 검색해보면 웹 서버는 정적 파일을 제공하는 서버고, WAS는 페이지를 동적으로 구성해서 제공하는 서버라고 나옵니다.

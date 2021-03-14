@@ -9,6 +9,7 @@
     "dev": "npm-run-all -p dev:**",
     "dev:client": "cd servers/front && npm run start",
     "dev:proxy": "nodemon ./servers/proxy.js",
+    "dev:auth": "nodemon ./servers/auth/server.js",
     "dev:api": "nodemon ./servers/api/server.js"
   },
   "author": "HwangJiseob",

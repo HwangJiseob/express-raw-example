@@ -10,6 +10,25 @@ const { Router, static } = express
 
 const app = express()
 
+const auth_proxy = createProxyMiddleware({
+  target: `http://localhost:${auth.port}/`,
+  changeOrigin: true,
+  pathRewrite: {'^/api/auth' : ''},
+  onError: (err, req, res) => {
+    res.writeHead(500, {
+      'Content-Type': 'text/plain',
+    });
+    console.log(err)
+    res.end('Something went wrong. And we are reporting a custom error message.');
+  },
+  onProxyReq: (proxyReq, req, res) => {
+    console.log('api')
+  },
+  onProxyRes: (proxyRes, req, res) => {
+  }
+})
+
+
 const api_proxy = createProxyMiddleware({
   target: `http://localhost:${api.port}/`,
   changeOrigin: true,
@@ -43,6 +62,7 @@ const front_proxy = createProxyMiddleware({
   }
 })
 
+app.use('/api/auth', auth_proxy)
 app.use('/api', api_proxy)
 app.use('/', front_proxy)
 
