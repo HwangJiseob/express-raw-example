@@ -2,6 +2,7 @@ const http = require('http')
 const express = require('express')
 const mysql = require('mysql2/promise')
 const { uid } = require('uid')
+const bcrypt = require('bcrypt');
 
 require("dotenv").config()
 
@@ -12,6 +13,8 @@ const port = (()=>{ const { port } = settings.servers['auth']; return Number(por
 const { Router, static } = express
 
 const app = express()
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const pool = mysql.createPool({
   host     : 'localhost',
@@ -21,11 +24,21 @@ const pool = mysql.createPool({
 });
 
 app.post('/', async (req, res) => {
-
   const [ result ] = await pool.query('SELECT * FROM auth.auth_key;')
   console.log(result)
   await res.send({"test": "auth test"})
-  // res.send("auth test")
+})
+
+app.post('/login', async (req, res) => {
+  const {id, pw} = req.body
+
+  const result = await bcrypt.hash(pw, 5)
+  console.log(result)
+  console.log("bcrypt")
+  
+
+
+  res.send({"test": "auth test"})
 })
 
 const server = http.createServer(app)

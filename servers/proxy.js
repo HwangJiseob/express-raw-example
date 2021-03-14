@@ -23,8 +23,10 @@ const auth_proxy = createProxyMiddleware({
   },
   onProxyReq: (proxyReq, req, res) => {
     console.log('auth')
+    // console.log(proxyReq)
   },
   onProxyRes: (proxyRes, req, res) => {
+    console.log("check")
   }
 })
 
