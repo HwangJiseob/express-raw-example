@@ -22,11 +22,8 @@ const auth_proxy = createProxyMiddleware({
     res.end('Something went wrong. And we are reporting a custom error message.');
   },
   onProxyReq: (proxyReq, req, res) => {
-    console.log('auth')
-    // console.log(proxyReq)
   },
   onProxyRes: (proxyRes, req, res) => {
-    console.log("check")
   }
 })
 

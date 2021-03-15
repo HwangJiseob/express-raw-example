@@ -6,31 +6,50 @@ const Home = () => {
   const [userid, setID ] = useState('')
   const [userpw, setPW ] = useState('')
 
-  const post_submit = async () => {
+  const post_submit = async (e) => {
+    e.preventDefault()
     const formData = {
       'id': userid,
       'pw': userpw
     }
-    // const res = await fetch(
-    //   '/api/auth/login',
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(formData)
-    //   }
-    // )
 
-    console.log(formData)
-
-    const res = await axios({
+    const res = await fetch('/api/auth/login', {
       method: 'post',
-      url: '/api/auth/login',
-      data: formData
+      headers: {
+        // "Content-Type": "application/x-www-form-urlencoded"
+        'Content-Type': 'application/json',
+        'Accept': "application/json"
+      },
+      body: JSON.stringify(formData),
     })
     console.log(res)
+  }
 
+  const post_register = async () => {
+    const formData = {
+      'id': userid,
+      'pw': userpw
+    }
+    const res = await fetch('/api/auth/register', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': "application/json"
+      },
+      body: JSON.stringify(formData)
+    })
+    console.log(res)
+  }
+
+  const post_auth = async () => {
+    const res = await fetch('/api/auth/verify', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': "application/json"
+      }
+    })
+    console.log(res)
   }
 
   return (
@@ -48,10 +67,16 @@ const Home = () => {
       <div>
         <input value={userid} onChange={(e)=>{setID(e.target.value)}} />
         <input value={userpw} onChange={(e)=>{setPW(e.target.value)}} />
-        <button onClick={post_submit}>
-          submit
-        </button>
       </div>
+      <button onClick={post_submit}>
+          react submit
+      </button>
+      <button onClick={post_register}>
+          react register
+      </button>
+      <button onClick={post_auth}>
+          jwt uath
+      </button>
     </div>
   )
 }
