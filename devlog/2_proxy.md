@@ -20,3 +20,21 @@ Proxy 서버의 목적을 생각하면 프론트엔드 서버를 프록시 서�
 실제 웹서비스에서 인증이나 결제 기능은 외부 api 서버를 통해 구현합니다. 하지만 이 프로젝트에서는 각각 `passport`, `아임포트`를 통해 구현할 계획입니다. db는 mysql을 사용할 계획입니다. nosql이 대세고 MERN이라는 용어가 의미하듯 express를 사용하면 db, 그것도 로컬 db로 mongoDB를 쓰지만 공부용이기 때문에 mysql을 사용할 겁니다. 또한 공부+실험용이기 때문에 배포는 안 할 거라 클라우드 서비스도 연동하지 않을 겁니다.
 
 # proxy 연동
+예제 코드는 아래와 같습니다.
+```js
+const express = require('express')
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const port = 3000
+
+const google_proxy = createProxyMiddleware({
+  target: `https://www.google.com/`,
+  changeOrigin: true
+})
+app.use('/google', google_proxy)
+
+app.listen(port, ()=>{
+  console.log(`Proxy server at http://localhost:${port}`)
+})
+```
+
+nginx처럼 프록시 서버 설정을 시스템 레벨에서 접근할 수는 없기 때문에 이 코드가 사실상 핵심입니다. 다만 제대로 사용하려면 [공식 문서](https://www.npmjs.com/package/http-proxy-middleware#options)의 options 파트를 보는 게 좋습니다.

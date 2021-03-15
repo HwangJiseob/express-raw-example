@@ -6,7 +6,7 @@ const pool = mysql.createPool({
   user     : 'root',
   password : process.env.MYSQL_PW,
   database : "auth",
-  multipleStatements: true  // 복수의 query문을 보낼 때 반드시 필요합니다.
+  multipleStatements: true  // 복수의 query문을 보낼 때 반드시
 });
 
 module.exports = {
